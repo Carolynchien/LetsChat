@@ -32,7 +32,9 @@ possbilly to find or get suggestions on people that share the same intestes with
 
 ---
 
-## _*ERD*_
+## _*POSTMVP*_
+
+couple different algorithm set up for matching uers
 
 ## _*Tasks With Trello*_
 

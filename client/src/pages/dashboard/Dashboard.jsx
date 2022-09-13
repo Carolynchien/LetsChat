@@ -95,7 +95,6 @@ const DashBoard = () => {
         liks
       )
       const updatedUser = likeRes.data
-
       setUser(updatedUser)
       setLikedPeople(user.likes)
     }
@@ -110,10 +109,21 @@ const DashBoard = () => {
     const res = await axios.get(`http://localhost:8080/api/like/${user.id}`)
     console.log(res.data)
   }
+
   const startChat = (person) => {
     setChatPerson(person)
     localStorage.setItem('likedPerson', JSON.stringify(person))
     navigate(`/chat`)
+  }
+  const unmatchPerson = async (index, likedPersonId) => {
+    console.log(user.id, likedPersonId)
+    const res = await axios.delete(
+      `http://localhost:8080/api/like/delete/user/${user.id}/like/${likedPersonId}`
+    )
+    console.log(res.data)
+    const list = [...likedPeople]
+    list.splice(index, 1)
+    setLikedPeople(list)
   }
 
   return (
@@ -148,7 +158,7 @@ const DashBoard = () => {
 
         <div>
           {user
-            ? user.likes.map((likedPerson) => (
+            ? likedPeople.map((likedPerson, index) => (
                 <div className="like-icon-box">
                   <div className="profile-container-like">
                     {user ? <img src={likedPerson.imageUrl} /> : ''}
@@ -164,6 +174,13 @@ const DashBoard = () => {
                       class="fa-solid fa-message "
                       onClick={() => startChat(likedPerson)}
                     ></i>
+                    <div className="unmatch-box">
+                      <span>Unmatch</span>
+                      <i
+                        class="corss fa-regular fa-circle-xmark"
+                        onClick={() => unmatchPerson(index, likedPerson.id)}
+                      ></i>
+                    </div>
                   </div>
                 </div>
               ))

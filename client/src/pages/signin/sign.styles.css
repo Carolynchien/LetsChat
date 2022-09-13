@@ -95,10 +95,12 @@
   align-items: center;
 }
 
-.fa-circle-xmark {
+#sign-in {
   position: absolute;
   right: 10px;
   top: 5px;
+  font-size: 30px;
+  border-radius: 30px;
 }
 
 .sign-up-box {

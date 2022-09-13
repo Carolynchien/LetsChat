@@ -27,6 +27,7 @@ const Chat = () => {
   const [chats, setChats] = useState([])
   const [conversation, setConversation] = useState([])
   const [isFirstTimeSending, setIsFirstTimeSending] = useState(false)
+  const [newComingPpl, setNewComingPpl] = useState()
 
   console.log(user, chatPerson, tab)
 
@@ -63,6 +64,19 @@ const Chat = () => {
     regisertUser()
     console.log(chatPerson.firstName)
   }, [])
+
+  useEffect(() => {
+    const filterchatPpl = (existingChatPpl, newComingChatPpl) => {
+      console.log(chats)
+      console.log(newComingChatPpl)
+      let newarray = existingChatPpl.filter((ppl) => {
+        return ppl.firstName != newComingChatPpl.senderName
+      })
+      console.log(newarray)
+      setChats(newarray)
+    }
+    filterchatPpl(chats, newComingPpl)
+  }, [newComingPpl])
 
   console.log(chats)
 
@@ -106,14 +120,16 @@ const Chat = () => {
       privateChats.set(payloadDate.senderName, list)
       setPrivateChats(new Map(privateChats))
       setIsLoading(true)
+      setNewComingPpl(payloadDate)
     }
   }
 
   const sendPrivateMessage = () => {
+    console.log(chatPerson)
     if (sompClient) {
       let chatMessage = {
         senderName: user.firstName,
-        receiverName: chatPerson.firstName,
+        receiverName: tab,
         message: userData.message,
         status: 'MESSAGE'
       }
@@ -135,26 +151,37 @@ const Chat = () => {
       setUserDate(defaultUserData)
     }
   }
-  const findHistoryMessage = async (firstName) => {
-    const res = await axios.get(
-      `http://localhost:8080/api/message/get/${user.firstName}/${firstName}`
-    )
-    const conversationData = await res.data
-    setConversation(conversationData)
-    console.log(conversationData)
-    // setTab(firstName)
-    // setChatPerson(firstName)
-  }
-  console.log(privateChats)
-  if (isFirstTimeSending) {
-    console.log(chatPerson.imageUrl)
+  // const findHistoryMessage = async (firstName) => {
+  //   const res = await axios.get(
+  //     `http://localhost:8080/api/message/get/${user.firstName}/${firstName}`
+  //   )
+  //   const conversationData = await res.data
+  //   setConversation(conversationData)
+  //   console.log(conversationData)
+  //   // setTab(firstName)
+  //   // setChatPerson(firstName)
+  // }
+  // console.log(privateChats)
+  // if (isFirstTimeSending) {
+  //   console.log(chatPerson.imageUrl)
+  // }
+  const swithChatPerson = (chatperson) => {
+    setTab(chatperson)
+    setChatPerson({ ...chatPerson, receiverName: chatPerson })
   }
 
   return (
     <div className="chat-main-container">
       <div className="messager-container">
+        <div className="messager-title">
+          <h3>People</h3>
+        </div>
         {[...privateChats.keys()].map((name, index) => (
-          <div key={index}>
+          <div
+            key={index}
+            className="messengers"
+            onClick={() => swithChatPerson(name)}
+          >
             <div className="profile-container-like">
               {isFirstTimeSending ? (
                 <img src={chatPerson.imageUrl} />
@@ -164,16 +191,19 @@ const Chat = () => {
                 ''
               )}
             </div>
-
             <p>{name}</p>
           </div>
         ))}
         {user &&
           chats.map((chat) => (
-            <div onClick={() => findHistoryMessage(chat.firstName)}>
-              <p></p>
+            <div
+              // onClick={() => findHistoryMessage(chat.firstName)}
+              className="messengers"
+            >
+              <div className="profile-container-like">
+                <img src={chat.imageUrl} />
+              </div>
               <p>{chat.firstName}</p>
-              <p></p>
             </div>
           ))}
       </div>
@@ -200,10 +230,12 @@ const Chat = () => {
                     <div className="message">{message.senderName}</div>
                   )}
 
-                  <div className="message-content-box">
-                    <span className="bubble"></span>
-                    <span className="bubble"></span>
-                    {message.message}
+                  <div
+                    className={`${
+                      tab === message.senderName ? 'left' : 'right'
+                    } message-content-box`}
+                  >
+                    <p>{message.message}</p>
                   </div>
                   {/* {tab !== message.senderName && (
                     <div className="receiver message">{message.senderName}</div>
@@ -222,52 +254,6 @@ const Chat = () => {
           <button onClick={sendPrivateMessage}>send</button>
         </div>
       </div>
-
-      {/* {userData.connected ? (
-        <div className="chat-box">
-          <ul>
-            {[...privateChats.keys()].map((name, index) => (
-              <li onClick={setTab(name)}>{name}</li>
-            ))}
-          </ul>
-          // <ul className="chat-message">
-          //   {[...privateChats.get(tab)].map((chat, index) => (
-          //     <li className="message" kye={index}>
-          //       {chat.senderName !== userData.userId && (
-          //         <div className="avatar">{chat.senderName}</div>
-          //       )}
-          //       <div className="message-data">{chat.message}</div>
-          //       {chat.senderName === userData.userId && (
-          //         <div className="avatar">{chat.senderName}</div>
-          //       )}
-          //     </li>
-          //   ))}
-          // </ul>
-          <div className="send-message">
-            <input
-              type="text"
-              className="input-messsage"
-              placeholder="enter message"
-              value={userData.message}
-              name="message"
-              onChange={handleMessage}
-            />
-            <button onClick={sendPrivateMessage}>Send</button>
-          </div>
-        </div>
-      ) : (
-        <div>
-          <input
-            type="text"
-            value={userData.userId}
-            onChange={handleUserName}
-            name="userId"
-          />
-          <button type="button" onClick={regisertUser}>
-            connect
-          </button>
-        </div>
-      )} */}
     </div>
   )
 }

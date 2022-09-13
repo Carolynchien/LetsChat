@@ -21,7 +21,7 @@
   font-family: 'Bree Serif', serif;
 }
 
-.fa-regular {
+.fa-heart.logo {
   font-size: 30px;
 }
 .fa-comments {
@@ -33,7 +33,7 @@
 .fa-heart.logo {
   position: absolute;
   top: 10px;
-  left: 95px;
+  left: 99px;
   color: brown;
 }
 /* .fa-heart:nth-of-type(1) {

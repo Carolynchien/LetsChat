@@ -78,6 +78,7 @@ const SignIn = () => {
         <form onSubmit={userLogin} className="sign-up-box">
           <i
             class="fa-regular fa-circle-xmark"
+            id="sign-in"
             onClick={() => setToggleSignIn(!toggleSignIn)}
           ></i>
 

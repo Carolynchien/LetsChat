@@ -1,0 +1,62 @@
+.userinfo-main-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  /* justify-content: center;
+
+  align-items: center; */
+}
+
+.form-container {
+  width: 1000px;
+
+  height: 600px;
+  margin: 100px auto;
+}
+
+.text-container {
+  margin: 10px 0px;
+}
+
+.text-container label {
+  font-size: 20px;
+  /* margin-left: 20px; */
+}
+
+.text-container input {
+  height: 35px;
+  width: 150px;
+  margin: 0px 20px 0 10px;
+  border: 1px solid rgb(150, 143, 143);
+  border-radius: 10px;
+}
+
+.text-container input:focus {
+  border: 2px solid rgb(204, 60, 84);
+  outline: none;
+}
+
+.text-container input[type='email'] {
+  width: 200px;
+}
+.radio-btn {
+  margin: 15px 0;
+}
+
+.radio-btn input {
+  display: none;
+}
+
+.radio-btn label {
+  padding: 8px 14px;
+  font-size: 15px;
+  border: 1px solid rgb(150, 143, 143);
+  border-radius: 10px;
+  margin: -10px 10px;
+  cursor: pointer;
+}
+
+.radio-btn input:checked + label {
+  background-color: rgb(204, 60, 84);
+  outline: none;
+}

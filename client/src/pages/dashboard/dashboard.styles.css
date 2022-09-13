@@ -1,0 +1,104 @@
+.dashboard-main {
+  width: 90%;
+  padding: 70px 0;
+  height: 95vh;
+  float: right;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.swipe-section {
+  width: 800px;
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  background-color: white;
+}
+
+.like-section {
+  width: 250px;
+  height: 700px;
+  border: 3px solid rgb(204, 60, 84);
+}
+.option div {
+  padding: 10px 10px;
+  border: 1px solid rgb(211, 20, 52);
+  background-color: #b7485a;
+  width: 50%;
+  text-align: center;
+}
+
+.like-section .option {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  overflow-x: auto;
+}
+.swipe {
+  width: 400px;
+  height: 400px;
+  border: 1px solid gray;
+  text-align: center;
+  border-radius: 10px;
+  position: absolute;
+}
+
+.swipe-image-box {
+  width: 100%;
+  height: 80%;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 00.3);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.swipe-image-box img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.swipe-image-box span {
+  background-color: white;
+}
+
+.swipe-image-box .description {
+  width: 100%;
+  background-color: white;
+}
+
+.profile-container-like {
+  margin: 5px 7px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+}
+
+.profile-container-like img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.like-icon-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.person-name {
+  margin: 0 7px;
+}
+
+.fa-heart {
+  color: #b7485a;
+  margin-right: 5px;
+}
+
+.fa-message {
+  color: rgb(10, 10, 131);
+}

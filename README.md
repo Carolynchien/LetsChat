@@ -21,6 +21,7 @@ possbilly to find or get suggestions on people that share the same intestes with
 
 - Java
 - Spring Boot
+- Socket.IO
 - Javascript
 - CSS
 - React
@@ -29,7 +30,7 @@ possbilly to find or get suggestions on people that share the same intestes with
 
 ## _*ERD*_
 
-![ERD](https://lucid.app/lucidchart/1129d5ee-4958-485a-86f5-49e6820c19b3/edit?beaconFlowId=32DC738F5543E2E1&page=0_0&invitationId=inv_64b39bde-5eee-4085-896d-6e490c485e46#)
+![Optional Text](./assets/ERD.png)
 
 ---
 
@@ -43,12 +44,4 @@ possbilly to find or get suggestions on people that share the same intestes with
 
 Create a function to be able to retrive history of message.
 
-## _*Tasks With Trello*_
-
-[My Trello](https://trello.com/b/V4nVrBPC/letschat)
-
 ---
-
----
-
-## _*Credits*_

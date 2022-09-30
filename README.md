@@ -35,7 +35,7 @@ possbilly to find or get suggestions on people that share the same intestes with
 
 ## _*Component Hierarchy Diagram*_
 
-(./assets/Component%20Hierarchy%20Diagram.png)
+![Optional Text](./assets/ComponentHierarchyDiagram.png)
 
 ---
 

@@ -19,7 +19,8 @@ possbilly to find or get suggestions on people that share the same intestes with
 
 ## _*Technology Used*_
 
-- HTML
+- Java
+- Spring Boot
 - Javascript
 - CSS
 - React
@@ -32,9 +33,15 @@ possbilly to find or get suggestions on people that share the same intestes with
 
 ---
 
+## _*Component Hierarchy Diagram*_
+
+(./assets/Component%20Hierarchy%20Diagram.png)
+
+---
+
 ## _*POSTMVP*_
 
-couple different algorithm set up for matching uers
+Create a function to be able to retrive history of message.
 
 ## _*Tasks With Trello*_
 

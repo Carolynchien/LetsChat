@@ -6,12 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.carolyn.springboot.entities.Appuser;
 import com.carolyn.springboot.entities.Like;
 import com.carolyn.springboot.services.LikeServide;
 
@@ -37,7 +39,10 @@ public class LikeController {
         return ResponseEntity.ok().body(likeService.findLikesByUser(id));
     }
     
-
+   @DeleteMapping(path ="/delete/user/{userId}/like/{id}")
+   public Appuser deleteLikePerson(@PathVariable Long userId, @PathVariable Long id) {
+     return likeService.deleteLike(userId , id);
+   }
 
     
 

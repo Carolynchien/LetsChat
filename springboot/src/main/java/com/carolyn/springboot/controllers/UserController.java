@@ -73,12 +73,13 @@ public class UserController {
    
 
     @PostMapping(path="{userId}/addinglikeperson")
-    public Appuser registerNewUser(@PathVariable("userId") Long userId, @RequestBody Like like )  {
-        System.out.println(userId);
+    public Appuser addPersontoUser(@PathVariable("userId") Long userId, @RequestBody Like like )  {
+        System.out.println("like: "+like);
 
         return appuserService.addLikedPersonToUser(userId,like);
 
     }
+    
 
     
     

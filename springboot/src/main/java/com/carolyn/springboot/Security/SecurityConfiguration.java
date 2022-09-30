@@ -49,6 +49,7 @@ public class SecurityConfiguration  {
          .antMatchers("/api/like/**").permitAll()
          .antMatchers("/api/user/**").permitAll()
          .antMatchers("/ws/**").permitAll()
+         .antMatchers("/api/message/**").permitAll()
          .antMatchers("/api/user-sign-up/**").permitAll().anyRequest().authenticated())
          .addFilterBefore(new JWTAuthenticationFilter (appuserService, jwtTokenHelper),
          UsernamePasswordAuthenticationFilter.class);

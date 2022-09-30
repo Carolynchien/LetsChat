@@ -1,26 +1,39 @@
 .userinfo-main-container {
-  width: 100%;
-  height: 100vh;
   display: flex;
-  /* justify-content: center;
 
-  align-items: center; */
+  justify-content: center;
+  align-items: center;
+  padding: 0 0;
 }
 
-.form-container {
-  width: 1000px;
-
+.form-main-container {
   height: 600px;
-  margin: 100px auto;
+  width: 1000px;
+  padding: 40px 50px;
+  border-radius: 10px;
+  border: rgb(204, 60, 84) solid 3px;
+  margin: 100px 0;
+}
+.form-main-container button {
+  margin-top: 20px;
+  margin-left: 100px;
+  width: 100px;
+  height: 50px;
+  padding: 0px 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: rgb(204, 60, 84);
+  font-size: 18px;
+  border: 2px solid black;
 }
 
 .text-container {
   margin: 10px 0px;
+  position: relative;
 }
 
 .text-container label {
   font-size: 20px;
-  /* margin-left: 20px; */
 }
 
 .text-container input {
@@ -39,6 +52,7 @@
 .text-container input[type='email'] {
   width: 200px;
 }
+
 .radio-btn {
   margin: 15px 0;
 }
@@ -59,4 +73,45 @@
 .radio-btn input:checked + label {
   background-color: rgb(204, 60, 84);
   outline: none;
+  border: 2px solid black;
+}
+
+.label-one {
+  font-size: 20px;
+}
+
+.profile-upload {
+  margin: 15px 0;
+}
+.about-me {
+  width: 200px;
+  height: 60px;
+  margin-left: 10px;
+  border: 1px solid rgb(150, 143, 143);
+  border-radius: 10px;
+}
+input::file-selector-buttom {
+  background-color: rgb(204, 60, 84);
+}
+
+.upload-image-container {
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  width: 240px;
+  height: 240px;
+  border: 3px solid rgb(204, 60, 84);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 15;
+}
+
+.upload-image-container img {
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  right: -1px;
+  border-radius: 50%;
+  width: 235px;
+  height: 235px;
 }

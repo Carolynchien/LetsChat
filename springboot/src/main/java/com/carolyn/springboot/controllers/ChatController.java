@@ -1,10 +1,7 @@
 package com.carolyn.springboot.controllers;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.converter.MessageConversionException;
-import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
+
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -17,7 +14,7 @@ import com.carolyn.springboot.entities.Message;
 
 import com.carolyn.springboot.repositories.AppUserRepository;
 import com.carolyn.springboot.repositories.ChatRepositoyr;
-import com.carolyn.springboot.repositories.LikeRepository;
+
 import com.carolyn.springboot.repositories.MessageRepository;
 import com.carolyn.springboot.services.AppuserService;
 import com.carolyn.springboot.services.LikeServide;
@@ -58,9 +55,11 @@ public class ChatController {
     @MessageMapping("/private-message")
     public Message receivePrivate(@Payload Message message) {
 
+        Appuser sender = appUserRepository.findByFirstName(message.getSenderName());
 
+        
         if(checkFirstTimeChatting(message.getSenderName(), message.getReceiverName())) {
-            Appuser sender = appUserRepository.findByFirstName(message.getSenderName());
+           
             Appuser receiver = appUserRepository.findByFirstName(message.getReceiverName());
 
             Chat chatInSender = new Chat();
@@ -78,7 +77,7 @@ public class ChatController {
             chatRepositoyr.save(chatInSender);
             chatRepositoyr.save(chatInReceiver);
             System.out.print(sender.getImageUrl());
-            message.setImageUrl(sender.getImageUrl());
+      
 
         }
 
@@ -94,7 +93,9 @@ public class ChatController {
             newMessage.setMessage(message.getMessage());
             newMessage.setSenderName(message.getSenderName());
             messageRepository.save(newMessage);
-            
+
+
+            message.setImageUrl(sender.getImageUrl());
         
 
 

@@ -124,15 +124,16 @@ public class AppuserService implements UserDetailsService{
           if(person.getPersonId() == userId) {
             person.setStatus("match");
             appUserRepository.save(likedUser);
-
             like.setUser(existingUser);
             like.setStatus("match");
             likeRepository.save(like);
+            break;
           }
         }
       }else {
         like.setUser(existingUser);
         likeRepository.save(like);
+        
       }
       
 

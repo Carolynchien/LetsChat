@@ -14,8 +14,6 @@ const defaultUserData = {
   status: ''
 }
 
-const map = new Map()
-map.set('carolyn', [])
 let sompClient = null
 const Chat = () => {
   const { user, setUser } = useContext(UserContext)
@@ -24,12 +22,15 @@ const Chat = () => {
   const [privateChats, setPrivateChats] = useState(new Map())
   const [tab, setTab] = useState('')
   const [isLodaing, setIsLoading] = useState(false)
-  const [chats, setChats] = useState([])
+
   const [conversation, setConversation] = useState([])
   const [isFirstTimeSending, setIsFirstTimeSending] = useState(false)
-  const [newComingPpl, setNewComingPpl] = useState()
+  const [newComingPpl, setNewComingPpl] = useState(null)
+  const [arr, setArr] = useState([])
+  const [chats, setChats] = useState([])
 
   console.log(user, chatPerson, tab)
+  console.log(newComingPpl)
 
   useEffect(() => {
     if (user === null && chatPerson === null) {
@@ -41,43 +42,47 @@ const Chat = () => {
       if (privateChats.get(storedChatPerson.firstName)) {
         privateChats.set(storedChatPerson.firstName, [])
         setPrivateChats(new Map(privateChats))
+        console.log(storedUser.chat)
+        setChats([...chats, ...storedUser.chats])
         setIsLoading(true)
-        setChats(storedUser.chats)
       }
     } else {
+      setChats([...chats, ...user.chats])
       setTab(chatPerson.firstName)
       if (privateChats.get(chatPerson.firstName)) {
         privateChats.set(chatPerson.firstName, [])
         setPrivateChats(new Map(privateChats))
         setIsLoading(true)
       }
-      setChats(user.chats)
+      console.log(chats)
     }
 
-    const regisertUser = () => {
-      let Sock = new SockJS(`http://localhost:8080/ws`)
-      sompClient = over(Sock)
-      console.log(sompClient)
-
-      sompClient.connect({}, onConnected, onError)
-    }
     regisertUser()
-    console.log(chatPerson.firstName)
   }, [])
 
-  useEffect(() => {
-    const filterchatPpl = (existingChatPpl, newComingChatPpl) => {
-      console.log(chats)
-      console.log(newComingChatPpl)
-      let newarray = existingChatPpl.filter((ppl) => {
-        return ppl.firstName != newComingChatPpl.senderName
-      })
-      console.log(newarray)
-      setChats(newarray)
-    }
-    filterchatPpl(chats, newComingPpl)
-  }, [newComingPpl])
+  const regisertUser = () => {
+    let Sock = new SockJS(`http://localhost:8080/ws`)
+    sompClient = over(Sock)
+    console.log(sompClient)
 
+    sompClient.connect({}, onConnected, onError)
+  }
+
+  useEffect(() => {
+    if (newComingPpl) {
+      filterchatPpl(chats, newComingPpl)
+    }
+  }, newComingPpl)
+
+  const filterchatPpl = (existingChatPpl, newComingChatPpl) => {
+    console.log(newComingChatPpl)
+    console.log(existingChatPpl)
+    let newarray = existingChatPpl.filter((ppl) => {
+      return ppl.firstName != newComingChatPpl
+    })
+    console.log(newarray)
+    setChats(newarray)
+  }
   console.log(chats)
 
   const onConnected = () => {
@@ -87,11 +92,6 @@ const Chat = () => {
     )
   }
   //this is where other people can send out message and we receive.
-
-  const handleUserName = (e) => {
-    const { value, name } = e.target
-    setUserDate({ ...userData, [name]: value })
-  }
 
   const handleMessage = (e) => {
     const { value, name } = e.target
@@ -105,11 +105,13 @@ const Chat = () => {
 
   const onPrivateMessageReceived = (payload) => {
     console.log('receving message')
+
     let payloadDate = JSON.parse(payload.body)
 
-    console.log(payloadDate)
+    const sender = payloadDate.senderName
 
     if (privateChats.get(payloadDate.senderName)) {
+      console.log('setting')
       console.log(privateChats.get(payloadDate.senderName))
       privateChats.get(payloadDate.senderName).push(payloadDate)
       setPrivateChats(new Map(privateChats))
@@ -120,12 +122,12 @@ const Chat = () => {
       privateChats.set(payloadDate.senderName, list)
       setPrivateChats(new Map(privateChats))
       setIsLoading(true)
-      setNewComingPpl(payloadDate)
+      console.log(chats)
+      setNewComingPpl(payloadDate.senderName)
     }
   }
 
   const sendPrivateMessage = () => {
-    console.log(chatPerson)
     if (sompClient) {
       let chatMessage = {
         senderName: user.firstName,
@@ -145,27 +147,32 @@ const Chat = () => {
         setPrivateChats(new Map(privateChats))
         setIsLoading(true)
         setIsFirstTimeSending(true)
+        filterchatPpl(chats, tab)
       }
 
       sompClient.send(`/app/private-message`, {}, JSON.stringify(chatMessage))
       setUserDate(defaultUserData)
     }
   }
-  // const findHistoryMessage = async (firstName) => {
-  //   const res = await axios.get(
-  //     `http://localhost:8080/api/message/get/${user.firstName}/${firstName}`
-  //   )
-  //   const conversationData = await res.data
-  //   setConversation(conversationData)
-  //   console.log(conversationData)
-  //   // setTab(firstName)
-  //   // setChatPerson(firstName)
-  // }
-  // console.log(privateChats)
-  // if (isFirstTimeSending) {
-  //   console.log(chatPerson.imageUrl)
-  // }
-  const swithChatPerson = (chatperson) => {
+
+  const findHistoryMessage = async (firstName) => {
+    const res = await axios.get(
+      `http://localhost:8080/api/message/get/${user.firstName}/${firstName}`
+    )
+    const conversationData = await res.data
+    setConversation(conversationData)
+    console.log(conversationData)
+    // setTab(firstName)
+    // setChatPerson(firstName)
+  }
+  console.log(privateChats)
+  if (isFirstTimeSending) {
+    console.log(chatPerson.imageUrl)
+  }
+  const swithChatPerson = (chatperson) => {}
+
+  const chatWithOldppl = (chatperson) => {
+    privateChats.set(chatperson, [])
     setTab(chatperson)
     setChatPerson({ ...chatPerson, receiverName: chatPerson })
   }
@@ -176,6 +183,7 @@ const Chat = () => {
         <div className="messager-title">
           <h3>People</h3>
         </div>
+
         {[...privateChats.keys()].map((name, index) => (
           <div
             key={index}
@@ -199,6 +207,7 @@ const Chat = () => {
             <div
               // onClick={() => findHistoryMessage(chat.firstName)}
               className="messengers"
+              onClick={() => chatWithOldppl(chat.firstName)}
             >
               <div className="profile-container-like">
                 <img src={chat.imageUrl} />

@@ -18,7 +18,7 @@ const DashBoard = () => {
   const [direction, setDirection] = useState('')
   const [matchppl, setMathppl] = useState(defaultMatchPpl)
   const [matchResults, setMatchResults] = useState([])
-  console.log(user)
+  // console.log(user)
 
   let navigate = useNavigate()
 
@@ -29,7 +29,7 @@ const DashBoard = () => {
     setUser(storedUser)
   }, [])
 
-  console.log(user)
+  // console.log(user)
 
   useEffect(() => {
     const findMatch = async () => {
@@ -94,6 +94,7 @@ const DashBoard = () => {
         `http://localhost:8080/api/user/${user.id}/addinglikeperson`,
         liks
       )
+      console.log(likeRes.data)
       const updatedUser = likeRes.data
       setUser(updatedUser)
       setLikedPeople(user.likes)
@@ -175,7 +176,7 @@ const DashBoard = () => {
                       onClick={() => startChat(likedPerson)}
                     ></i>
                     <div className="unmatch-box">
-                      <span>Unmatch</span>
+                      <span>Remove</span>
                       <i
                         class="corss fa-regular fa-circle-xmark"
                         onClick={() => unmatchPerson(index, likedPerson.id)}

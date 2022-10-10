@@ -83,7 +83,7 @@ public class AppuserService implements UserDetailsService{
           return existingUser.get();
 
         }
-        throw new RuntimeException("jvddfjlbvdf");
+        throw new RuntimeException("no user found");
      
     }
 
